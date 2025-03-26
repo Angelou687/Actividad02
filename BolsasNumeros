@@ -1,0 +1,62 @@
+import java.util.ArrayList;
+
+// Clase genérica que almacena elementos en orden
+class BolsasNumeros<T extends Comparable<T>> {
+    private ArrayList<T> elementos;
+
+    public BolsasNumeros() {
+        this.elementos = new ArrayList<>();
+    }
+
+    public void agregarElemento(T elemento) {
+        int i = 0;
+        // Buscar la posición correcta para mantener el orden
+        while (i < elementos.size() && elementos.get(i).compareTo(elemento) < 0) {
+            i++;
+        }
+        // Insertar el elemento en la posición correcta
+        elementos.add(i, elemento);
+    }
+
+    public ArrayList<T> obtenerElementos() {
+        return new ArrayList<>(elementos);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Lista para almacenar bolsas genéricas
+        ArrayList<BolsasNumeros<?>> listaBolsas = new ArrayList<>();
+
+        // Crear 3 bolsas de diferentes tipos
+        BolsasNumeros<Integer> bolsaEnteros = new BolsasNumeros<>();
+        BolsasNumeros<Double> bolsaDecimales = new BolsasNumeros<>();
+        BolsasNumeros<String> bolsaCadenas = new BolsasNumeros<>();
+
+        // Agregar números enteros en orden
+        bolsaEnteros.agregarElemento(5);
+        bolsaEnteros.agregarElemento(1);
+        bolsaEnteros.agregarElemento(3);
+
+        // Agregar números decimales en orden
+        bolsaDecimales.agregarElemento(2.5);
+        bolsaDecimales.agregarElemento(1.1);
+        bolsaDecimales.agregarElemento(3.7);
+
+        // Agregar cadenas en orden alfabético
+        bolsaCadenas.agregarElemento("Banana");
+        bolsaCadenas.agregarElemento("Manzana");
+        bolsaCadenas.agregarElemento("Cereza");
+
+        // Agregar las bolsas a la lista principal
+        listaBolsas.add(bolsaEnteros);
+        listaBolsas.add(bolsaDecimales);
+        listaBolsas.add(bolsaCadenas);
+
+        // Imprimir el contenido de cada bolsa
+        System.out.println("Contenido de las bolsas:");
+        for (int i = 0; i < listaBolsas.size(); i++) {
+            System.out.println("Bolsa " + (i + 1) + ": " + listaBolsas.get(i).obtenerElementos());
+        }
+    }
+}
